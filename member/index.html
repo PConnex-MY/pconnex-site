@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Member | PConnex</title>
+        <link rel='shortcut icon' href='../favicon.ico'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.0.0/jquery.serialize-object.compiled.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/path.js/0.8.4/path.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
+        <!-- <script src="/controller/app.js"></script>
+     <script src="../scripts/angularfire.min.js"></script>
+        <script src="https://code.angularjs.org/1.2.0rc1/angular-route.js"></script> -->
+        <!--     <link rel="stylesheet" href="/css/style.css"> -->
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top navbar-inverse" id="top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="../" class="navbar-brand"><img src="https://firebasestorage.googleapis.com/v0/b/pconnex-membership.appspot.com/o/images%2Fpconnex_lg.png?alt=media&token=6d4407d5-8a28-44de-9d3d-6ba35ddacea3" width="100px"></a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li> <a href="#/">Login</a>
+                        </li>
+                        <li> <a href="#/register">Register</a>
+                        </li>
+                        <li> <a href="#/forgot_password">Forgot Password</a>
+                        </li>
+
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="#/change_password">Update Password</a>
+                        <li><a href="#/profile">Profile</a></li>
+                        <li><a href="#/status">Status</a></li>
+                        
+                        <li class="divider"></li>
+                        <li><li><a href="#/logout">Logout</a></li></li>
+                        </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div id="container" class="container">
+            <!-- LOGIN -->
+            <form id="frmLogin" role="form" action="" method="POST">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="txtEmail">Email address</label>
+                    <input type="email" class="form-control" id="txtEmail" placeholder="Enter email" name="email" />
+                </div>
+                <div class="form-group">
+                    <label for="txtPass">Password</label>
+                    <input type="password" class="form-control" id="txtPass" placeholder="Password" name="password" />
+                </div>
+                <button type="submit" class="btn btn-success">Login</button>
+                <a href="#/register" class="btn btn-primary">Register as New Applicant</a>
+                <a href="#/forgot_password" id="forgot">Forgot Password</a>
+                <br />
+                <br />
+                <!--<h4>Login with</h4>
+                 
+                <a href="#" class="btn btn-primary bt-social" data-provider="facebook">Facebook</a>
+                <a href="#" class="btn btn-info bt-social" data-provider="twitter">Twitter</a>
+                <a href="#" class="btn btn-danger bt-social" data-provider="google">Google+</a><a href="#" class="btn btn-default bt-social" data-provider="github">GitHub</a>
+                <a href="#" class="btn btn-warning" id="btAnon">Anon</a> -->
+            </form>
+            <!-- / LOGIN -->
+            <!-- LOGOUT -->
+            <form id="frmLogout" role="form">
+                <h2>You are logged out!</h2>
+                <br/>
+                <a href="#/" class="btn btn-primary">Login</a>
+            </form>
+            <!-- / LOGOUT -->
+            <!-- REGISTER -->
+            <form id="frmRegister" role="form">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <label for="txtRegEmail">Email address</label>
+                    <input type="email" class="form-control" id="txtEmail" placeholder="Enter email" name="email" />
+                </div>
+                <div class="form-group">
+                    <label for="txtRegPass">Password</label>
+                    <input type="password" class="form-control" id="txtPass" placeholder="Password" name="password" />
+                </div>
+                <div id="terms">
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">User Agreement</a></li>
+                            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Privacy Policy</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                <div id="userAgreement">
+                                    <p>&nbsp;</p>
+                                    <p align="center"><strong>TERMS OF USE AGREEMENT </strong></p>
+
+                                    <p align="center"><strong>("Agreement")</strong></p>
+
+                                    <p align="center">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Introduction</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to <strong>Program</strong>. This membership program is owned and operated by Pconnex Sdn. Bhd. ("<strong>PConnex</strong>"). These terms and conditions shall govern your use or access of this web and/or mobile app and its contents ("<strong>Service</strong>"). If you do not agree with these terms and conditions, you should immediately exit this web and/or mobile app.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By using or accessing the Service, you expressly and irrevocably agree to be bound by these terms and conditions.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Program provides a privilege and benefit to users who have registered for the Program ("<strong>User</strong>"). Privileges and benefits received by the Users are divided between Free Users and Premium Users. Free users are members who sign up for the free account and Premium Users are users who pay an enrolment fee. The lists of benefits provided for the different type of users are as per Annexure 1 ("<strong>Membership Benefits</strong>"). &nbsp;</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The User acknowledges that the benefits received by the User may be conducted or performed using certain confidential information. The User shall not be entitled to request or compel Pconnex to reveal such information for any reason whatsoever.&nbsp; It shall be your duty to ensure that you are agreeable to receive the Membership Benefits as provided by the Program at your own free will.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Program is a service provided by way of a web and mobile app and the benefits received by the different types of User may differ. The User will be entitled to change the Users subscription method from Free User to Premium user at any time in accordance to the terms herein.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">1.6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Headings are inserted for convenience and shall not affect the interpretation of these terms.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Program</u></strong><strong><u> Service</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">2.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subject to the terms and conditions herein, you the User are hereby granted a non-exclusive, limited, non-transferable, freely revocable license to use the Service as permitted by the features of the Service. PCONNEX reserves all rights not expressly granted herein in the Service and the terms and conditions herein. PCONNEX may terminate this license at any time for any reason whatsoever or for no reason at all.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Eligibility&nbsp; </u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must be at least 18 years of age to use or access this Service. By using or accessing this Service, you expressly warrant and represent that you are at least 18 years of age.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Program</u></strong><strong><u> Account</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">4.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Program account gives you access (upon completion of a valid registration) to the services and functionality that we may establish and maintain from time to time and in our sole discretion. We may maintain different types of accounts for different types of Users. If you open a Program account on behalf of a company, organization, or other entity, then (a) "you" includes you and that entity, and (b) you represent and warrant that you are an authorized representative of the entity with the authority to bind the entity to this Agreement, and that you agree to this Agreement on the entity’s behalf. By connecting to the Program with a third-party service, you give us permission to access and use your information from that service as permitted by that service, and to store credentials for that service. You may never use another User’s account without written permission from Pconnex. When creating your account, you must provide accurate and complete information. You are solely responsible for the activity that occurs on your account, and you must keep your account password secure. We encourage you to use "strong" passwords (passwords that use a combination of upper and lower case letters, numbers and symbols) with your account. You must notify PCONNEX immediately of any breach of security or unauthorized use of your account. PCONNEX will not be liable for any losses caused by any unauthorized use of your account. You may control your User profile and how you interact with the Service by changing the settings in your account profile/settings pages. By providing your email address you consent to our usage of the email address to send you Service-related notices, including any notices required by law, in lieu of communication by postal mail. We may also use your email address to send you other messages, such as changes to features of the Service and special offers. If you do not want to receive certain email messages, you may opt out or change your preferences in your account profile/settings pages. Opting out may prevent you from receiving certain email messages regarding the Service that may be of interest to you or may even result in termination of your account.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">4.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We may, without prior notice, change the Service; stop providing the Service or features of the Service, to you or to Users generally; or create usage limits for the Service. We may permanently or temporarily terminate or suspend your access to the Service without notice and liability for any reason, including but not limited to, if in our sole determination you violate any provision of this Agreement, or for no reason. Upon termination for any reason or no reason, you continue to be bound by the terms of this Agreement. You are solely responsible for your interactions with other users. We reserve the right, but have no obligation, to monitor disputes between you and other Users. PCONNEX shall have no liability for your interactions with other Users, or for any User’s action or inaction.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">4.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You further agree to comply and abide with but shall not be limited to any and all changes, modification and amendments which may be made to your account and/or to Users generally. For the avoidance of doubt, this shall include but shall not be limited to any updating, re-downloading, re-installing and modifying of the app, Membership and/or Services. For further avoidance of doubt, your failure to comply and abide by this said terms and conditions may results in loss of access or termination of your account and no liability and responsibility shall be borne by us</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">4.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A Member may only hold one Membership account at any time. If a Member inadvertently creates a duplicate account, Pconnex reserves the right to merge, amend, &nbsp;consolidate the details of the Member into the Member’s earlier account or delete the account. Pconnex will not be responsible for any loss of Member benefits and/or services due to duplicate Membership and Pconnex shall not be liable for any refunds or compensation pursuant thereto.</p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Account Cancellation</u></strong></p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">5.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You may terminate your Program account prior to expiry by accessing the web and/or mobile app and completing and signing the required form. Upon cancellation, all benefits and privileges of the User shall cease and PCONNEX will not be liable for any compensation or to pay any refunds to the User in relation to the forfeiture.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">5.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PCONNEX reserves the right to terminate any Membership at its sole and absolute discretion. Such termination shall be without prejudice to the accrued rights and remedies of PCONNEX and its Partners.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Copyright &amp; Trademark</u></strong></p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">6.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This Service and its contents, including but without limitation to schedules, pricing, text, graphics, logos and information regarding the venue, features and status etc. are proprietary to PCONNEX or its content suppliers. Your use of this Service must not in any way infringe the intellectual property rights of PCONNEX or its content suppliers.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">6.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You may use this Service and the content only for personal and non-commercial purposes subject to applicable copyright laws but subject to the restrictions below:-</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not:</p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">(i)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; republish material from this Service (including republication on another Service);</p>
+
+                                    <p style="margin-left:99.25pt;">(ii)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sell, rent or sub-license material from this Service;</p>
+
+                                    <p style="margin-left:99.25pt;">(iii)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; show any material from this Service in public;</p>
+
+                                    <p style="margin-left:99.25pt;">(iv)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reproduce, duplicate, copy or otherwise exploit material or information on this Service for a commercial purpose;</p>
+
+                                    <p style="margin-left:99.25pt;">(v)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; edit or otherwise modify any material on this Service; or</p>
+
+                                    <p style="margin-left:99.25pt;">(vi)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; re-distribute material from this Service (except for content specifically and expressly made available for redistribution).</p>
+
+                                    <p style="margin-left:92.15pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">6.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All trademarks, trade names, service marks (whether registered or unregistered) and logos in this Service are owned by PCONNEX or their respective owners and must not be used or modified in any way without obtaining the prior written consent of PCONNEX or their respective owners.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">6.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Except as explicitly provided herein, nothing in this Agreement shall be deemed to create a license in or under any such intellectual property rights.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Acceptable Use</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">7.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not use this Service in any way that causes, or may cause, damage to this Service or impairment of the availability or accessibility of this Service; or in any way which is unlawful, illegal, fraudulent or harmful, or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">7.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not use this Service to copy, store, host, transmit, send, use, publish or distribute any material which consists of (or is linked to) any spyware, computer virus, Trojan horse, worm, keystroke logger, rootkit or other malicious computer software.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">7.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not conduct any systematic or automated data collection activities (including without limitation scraping, data mining, data extraction and data harvesting) on or in relation to this Service without PCONNEX’s express written consent.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">7.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not use this Service to transmit or send unsolicited commercial communications.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">7.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not use this Service for any purposes related to marketing without PCONNEX’s express written consent.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">7.6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You are solely responsible for your interactions with other Program Users. We reserve the right, but have no obligation, to monitor disputes between you and other Users. PCONNEX shall have no liability for your interactions with other Users, or for any User’s action or inaction.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>User Content</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">8.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You expressly grant to PCONNEX a worldwide, irrevocable, non-exclusive, royalty-free license to use, reproduce, adapt, publish, translate and distribute any material (including without limitation text, images, audio material, video material and audio-visual material) that you submit to, for whatever purposes ("<strong>User Content</strong>") in any manner as PCONNEX shall deem fit.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">8.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your User Content must not be illegal or unlawful, must not infringe any third party's legal rights, and must not be capable of giving rise to legal action whether against you or PCONNEX or a third party (in each case under any applicable law).</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">8.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In addition to the above, you agree that you will not upload, post or otherwise transmit or make available any User Content (including text links, communications, software, images, sounds, data or other information) that is not consistent with the permissible uses outlined in these terms and conditions including, but not limited to the following:</p>
+
+                                    <p style="margin-left:70.9pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; false, inaccurate, misleading, unlawful, harmful, threatening, abusive, tortuous, harassing, defamatory, libelous, invasive of another’s privacy, vulgar, profane, sexually oriented/suggestive/explicit, obscene, racially or ethnically offensive or otherwise objectionable.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; violates any laws, third party rights, or infringes on any patent, trademark, trade secret, copyright or other proprietary rights of any party.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; constitutes advertising or promotion, junk mail, spamming, chain letters or any other form of unauthorized solicitation. Links that connect to commercial Services will not be considered unauthorized solicitations unless the link or the Service content appears to be intended as a means of solicitation as determined by PCONNEX in its sole discretion.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; contains software viruses, Trojan horses, worms, time bombs, cancelbots or any other computer code or files that are designed to disrupt, damage or limit the functioning of any software or hardware.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; provides any non-public information about PCONNEX or any other company or person without the proper authorization to do so. This includes providing the names, addresses and extension numbers of PCONNEX’s employees and any of the users or participants of this Service.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(f)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; intentionally interferes with the operation of any of the products or services included in this Service without limitation, mail or ‘post’ bombing, news bombing, other flooding techniques, deliberate attempts to overload a system and broadcast attacks.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(g)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; impersonates any person or entity, including PCONNEX employees or forges any TCP-IP packet header, email header or any part of a message header. This prohibition does not include the use of aliases or anonymous remailers.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(h)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; attacks or insults another.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(i)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; suggests or encourages any form of illegal activity.</p>
+
+                                    <p style="margin-left:70.9pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">8.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not submit any User Content to this Service that is or has ever been the subject of any threatened or actual legal proceedings or other similar complaint.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">8.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PCONNEX reserves the right to edit or remove any material submitted to this Service, or stored on PCONNEX’s servers, or hosted or published upon this Service.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">8.6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Notwithstanding PCONNEX’s rights under these terms and conditions in relation to User Content, PCONNEX does not undertake to monitor the submission of such content to, or the publication of such content on, this Service.</p>
+
+
+
+                                    <p style="margin-left:35.45pt;">8.7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You are fully and solely responsible for any and all content submitted to us and you shall be liable for any harm of damage caused by such content. Your further agree to indemnify and keep indemnified PCONNEX from and against all actions, suits, claims or demands, proceedings, losses, damages, compensation, costs (including legal cost), charges and expenses whatsoever to which PCONNEX shall or may be or become liable in respect of any content submitted.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Links</u></strong></p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">9.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This Service may contain links to websites maintained by third parties ("<strong>External Sites</strong>"). These External Sites are provided for your reference and convenience only. PCONNEX does not operate, control or endorse in any respect such External Sites or their content. You shall assume sole responsibility for use of these External Sites and are therefore, advised to examine the terms and conditions of those External Sites carefully.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">9.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You must not link to this Service without obtaining the prior written approval of PCONNEX. Use of any automated screen capture or screen scraping technologies to obtain information from this site without the prior written approval of PCONNEX is an infringement of PCONNEX’s intellectual property rights.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Disclaimer</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">10.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The content on this Service are provided on an "as is" and "as available" basis. You therefore agree that you use this Service and the services provided herein at your sole risk. PCONNEX, its officers, directors, employees, partners and suppliers disclaim:</p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all warranties or representations of any kind regarding this Service, its operations or the accuracy, reliability, completeness, usefulness, non-infringement of intellectual property rights, or quality of any information, content or material included herein.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to the fullest extent permitted by applicable laws, all conditions and warranties, express and implied, including but not limited to implied warranties of merchantability or fitness for a particular purpose or non-infringement;</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all liability to you or anyone else for any direct, indirect, special, consequential or punitive loss or damage (including without limitation loss of revenue, loss of goodwill, loss of reputation and loss of, or damage to, data), incurred or suffered in connection with the use or inability to use this Service whether based in contract, tort or otherwise even if we are informed of their possibility;</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all liability to you or anyone else if interference with or damage to your computer systems occurs in connection with use of this Service or an external site. You must take your own precautions to ensure that whatever you select for use from this Service is free of viruses or anything else that may interfere with or damage the operation of your computer systems.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">10.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Without prejudice to the generality of the foregoing paragraph, PCONNEX does not warrant that this Service (or any part thereof) will be constantly available or available at all.</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Waivers And Indemnity</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">11.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You expressly agree to irrevocably waive and release PCONNEX from any loss or damages which you may suffer or incur as a result of the Membership such as but not limited to the following:-</p>
+
+
+
+                                    <p style="margin-left:63.8pt;">(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; your use and/or access of this Service and its contents; and</p>
+
+                                    <p style="margin-left:63.8pt;">&nbsp;</p>
+
+                                    <p style="margin-left:63.8pt;">(b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; any changes made to any methodology or venue features.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">11.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You hereby agree to indemnify and hold us, our affiliates, and each of our and their respective directors, shareholders, employees, partners, agents, contractors, directors, suppliers, and representatives harmless against all losses, damages, claims, liabilities, expenses, cause of action, debt or costs (including solicitors' fees and costs) that arise from or in connection with:</p>
+
+
+
+                                    <p style="margin-left:56.7pt;">(a)&nbsp;&nbsp;&nbsp;&nbsp; your access and/or use of the Membership and/or Service;</p>
+
+                                    <p style="margin-left:56.7pt;">&nbsp;</p>
+
+                                    <p style="margin-left:56.7pt;">(b)&nbsp;&nbsp;&nbsp; your breach of any of these Terms or any applicable law or regulation;</p>
+
+                                    <p style="margin-left:56.7pt;">&nbsp;</p>
+
+                                    <p style="margin-left:56.7pt;">(c)&nbsp;&nbsp;&nbsp;&nbsp; any other party's access and/or use of the Membership and/or Service using your validly registered account; and/or</p>
+
+                                    <p style="margin-left:56.7pt;">&nbsp;</p>
+
+                                    <p style="margin-left:56.7pt;">(d)&nbsp;&nbsp;&nbsp; any other party's breach of any of these terms and conditions where such party was able to access and/or use the Membership and/or Service using your validly registered account.</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">11.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Any rights relating to the use of the Membership and/or Service not expressly granted herein are reserved and no license or right is granted to you by implication, estoppel or otherwise</p>
+
+                                    <p style="margin-left:35.45pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Amendment, Variation &amp; Revision </u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">12.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This Service and its contents (or any part thereof) may unilaterally be amended, varied or revised from time to time by us without any notice to you.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>13.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Governing Law</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">13.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; These terms and condition and this Service shall be governed by the laws of Malaysia and you further agree to submit to the exclusive jurisdiction of the Malaysia courts. In the event of any dispute arising hereunder, such dispute shall be resolved by any court of competent jurisdiction in Malaysia.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>14.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Entire Agreement/Severability</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">14.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This Agreement, together with any amendments and any additional agreements you may enter into with PCONNEX in connection with the Service, shall constitute the entire agreement between you and PCONNEX concerning the Service. If any provision of this Agreement is deemed invalid by a court of competent jurisdiction, the invalidity of such provision shall not affect the validity of the remaining provisions of this Agreement, which shall remain in full force and effect.</p>
+
+
+
+                                    <p style="margin-left:.5in;"><strong>15.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>No Waiver</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">15.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The failure of PCONNEX to enforce its rights under this Agreement at any time for any period shall not be construed as a waiver of such rights.</p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>16.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Site Security</u></strong></p>
+
+                                    <p style="margin-left:.5in;">&nbsp;</p>
+
+                                    <p style="margin-left:35.45pt;">16.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Violating the security of this Service is prohibited and may result in criminal and civil liability. We may investigate incidents involving such violations and may involve and will cooperate with law enforcements if a criminal violation is suspected.</p>
+
+                                    <p style="margin-left:.75in;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;"><strong>17.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong><u>Personal Data and Privacy Policy</u></strong></p>
+
+
+
+                                    <p style="margin-left:35.45pt;">In the course of the use of the Service, you may be asked to provide certain information about yourself. Such information shall be collected and used in accordance to our policy as set out in the Privacy Policy attached herewith and can be located at website/mobile app. You acknowledge that you are solely responsible for the accuracy and content of such information.</p>
+
+                                    <p align="center">&nbsp;</p>
+
+                                    <p align="center"><strong>[THE REMAINDER OF THIS PAGE IS INTENTIONALLY LEFT BLANK]</strong></p>
+
+
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="settings">
+                                <div id="privacyPolicy">
+                                    <p align="center">&nbsp;</p>
+                                    <p align="center"><strong>Pconnex</strong><strong> Membership Program</strong></p>
+
+                                    <p align="center"><strong>Privacy Policy and Data Protection</strong></p>
+                                    <p>&nbsp;</p>
+
+                                    <p>PCONNEX SDN BHD (Company No. 1175197-T) is committed to ensure that your personal data is protected in accordance to the <strong>Personal Data Protection Act 2010</strong> ("<strong>the Act</strong>") which was enacted by the Government to regulate the processing of personal data. This Privacy Policy explains our policy on collecting, using and disclosing your Personal Data and the Personal Data which you provide us now or from time to time will be used and processed by us, in accordance with this Privacy Policy (as amended, varied, revised from time to time). In the event of any amendment, variation or revision, a copy of the new Privacy Policy will be sent to you by email or other methods which Pconnex Sdn Bhd deem suitable.</p>
+
+                                    <p>In this Privacy Policy, any reference to "<strong>Pconnex</strong>" shall mean Pconnex Sdn Bhd and shall include its subsidiaries, related and associated companies.</p>
+
+                                    <p>"<strong>Personal Data</strong>" shall have the meaning as ascribed to it in accordance to the Act.</p>
+
+                                    <p>"<strong>Program</strong>" shall mean the membership program that is provided via web and mobile app.</p>
+
+                                    <p>"<strong>We</strong>", "<strong>us</strong>" or "<strong>our</strong>" shall mean Pconnex</p>
+
+                                    <p style="margin-left:42.55pt;"><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Personal Data</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">1.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Personal Data collected which are submitted to us shall include but shall not be limited to the following:</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NRIC No; or passport</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Address;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Credit Card details; or debit card or bank account;</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Telephone number; and</p>
+
+                                    <p style="margin-left:99.25pt;">1.1.8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E-mail address.</p>
+
+                                    <p style="margin-left:99.25pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">1.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The purpose of collecting and processing the Personal Data shall be as follows:</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to enable communication;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for provision of services related to the Program;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to process any applications;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to monitor and improve services;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to comply with applicable laws and any related matters;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for direct or indirect marketing purposes;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other legitimate purposes as determined by Pconnex;</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for administrative purposes, including any billing or payments; and</p>
+
+                                    <p style="margin-left:99.25pt;">1.2.9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other ancillary matters related to the provision of services related to the Program.</p>
+
+                                    <p style="margin-left:99.25pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">1.3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sensitive Personal Data as defined by the Act shall not be collected unless required by applicable laws. In the event you are not desirous of your Sensitive Personal Data to be collected by us, kindly do not submit such information. In the event that you choose to submit your Sensitive Personal Data, then such data will be deemed and treated as Personal Data which will be subject to the terms and conditions herein which shall including all aspects related to processing, usage and disclosure thereof.</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;"><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Disclosure of Personal Data</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">2.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In order to properly provide the services related to the Program, your Personal Data may be processed, used and disclosed to the following classes or third parties (hereinafter referred to as "<strong>Third Party</strong>"):</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; affiliated companies with Pconnex;</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; third party service providers;</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; debt collection agencies, credit reporting agencies or credit providers;</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; any party in order to facilitate payments;</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; any party which may be required by any provisions of the law; and</p>
+
+                                    <p style="margin-left:99.25pt;">2.1.6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; our contractors, service providers, consultants, auditors, and advisors.</p>
+
+                                    <p style="margin-left:99.25pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">2.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We shall not disclose your Personal Data without your permission except in accordance to the terms and conditions herein or legally entitled to do so or if we may so determine that it would be necessary to protect and/or defend our rights, property or personal safety and those of our customers or any other party.</p>
+
+
+
+                                    <p style="margin-left:42.55pt;"><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Supply of Personal Data</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">3.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Personal Data which are requested by us are mandatory which you must provide and agree to the processing of such mandatory information by us. Should you decide not to provide the compulsory Personal Data required, Pconnex shall not be able to proceed with the provision of services pursuant to the Program and reserves the rights to cease the processing of the application or any other services related to the Program.</p>
+
+                                    <p style="margin-left:42.55pt;">3.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By submitting your Personal Data, you:</p>
+
+                                    <p style="margin-left:99.25pt;">3.2.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; declare that you have read, understood and accepted the statements set out in this Privacy Notice;</p>
+
+                                    <p style="margin-left:99.25pt;">3.2.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; declare that the information provided are accurate, complete and true and when such information becomes incorrect or outdated, you shall correct or update such information;</p>
+
+                                    <p style="margin-left:99.25pt;">3.2.3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; are giving your consent to the processing of your Personal Data that is being processed, or that is to be collected and further processed;</p>
+
+                                    <p style="margin-left:99.25pt;">3.2.4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; consent to the transfer of your Personal Data between Pconnex and the classes and third party as set out herein in the manner and extent as may be determined by Pconnex irrespective of their locations; and</p>
+
+                                    <p style="margin-left:99.25pt;">3.2.5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; consent to the transfer of your data to locations outside of Malaysia or disclosure to the Third Party, who may be located within or outside Malaysia.</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;"><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Your rights provided under the Act</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">4.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subject to the provision of the Act, you shall have the right to:</p>
+
+                                    <p style="margin-left:99.25pt;">&nbsp;</p>
+
+                                    <p style="margin-left:99.25pt;">4.1.1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; access your Personal Data by requesting for a copy of your Personal Data; and</p>
+
+                                    <p style="margin-left:99.25pt;">4.1.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; request to rectify or update your Personal Information.</p>
+
+                                    <p style="margin-left:99.25pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;">4.2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You shall have the right to withdraw consent which you have granted herein in regards to your Personal Data by notice in writing and thereafter we shall cease processing your Personal Data and the terms herein shall apply. However, kindly note that the terms of paragraph 3 will apply <em>mutatis mutandis</em>.</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;"><strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Contact Details</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:130px;">
+                                                    <p>Address</p>
+                                                </td>
+                                                <td style="width:28px;">
+                                                    <p>:</p>
+                                                </td>
+                                                <td style="width:401px;">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:130px;">
+                                                    <p>Email&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                                </td>
+                                                <td style="width:28px;">
+                                                    <p>:</p>
+                                                </td>
+                                                <td style="width:401px;">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:130px;">
+                                                    <p>Telephone No</p>
+                                                </td>
+                                                <td style="width:28px;">
+                                                    <p>:</p>
+                                                </td>
+                                                <td style="width:401px;">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:130px;">
+                                                    <p>Fax No</p>
+                                                </td>
+                                                <td style="width:28px;">
+                                                    <p>:</p>
+                                                </td>
+                                                <td style="width:401px;">
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:42.55pt;"><strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>Language</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p style="margin-left:.5in;">This Policy has been drawn up in both the English and Malay languages. In the event there is any conflict, dispute or divergence between the two texts, the English version shall prevail. For the avoidance of doubt, the Malay version is for convenience only and does not affect the interpretation of this Policy.</p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+                                    <p align="center"><strong>[the remainder of this page is intentionally left blank]</strong></p>
+
+                                    <p style="margin-left:42.55pt;">&nbsp;</p>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <br/>
+                <p><b>By clicking "Register" i agree that:</b>
+                <ul>
+                    <li>I have read and accepted the User Agreement and Privacy Policy</li>
+                    <li>I may receive updates from PConnex</li>
+                </ul>
+                </p>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <!-- / REGISTER -->
+            <!-- FORGOT PASSWORD -->
+            <form id="frmForgot" role="form">
+            <h2>Forgot Password?</h2><br/>
+                <p>Oh dear! May enter your registered email address, and we will get you back with temporary link email to reset you password</p>
+                <div class="form-group">
+                    <div class=""><label>Email</label></div>
+                    <div class="">
+                    <input type="email" class="form-control" id="resetEmail" placeholder="email address"/></div>
+                    <br/>
+                    <div class=""><button type="submit" id="sendEmail" class="btn btn-primary">Request Password Change</button></div>
+                </div>
+            </form>
+            <!-- CHANGE PASSWORD -->
+            <form id="frmChange" role="form">
+            <h2>Update Password</h2><br/>
+                <p><b>Email:</b> <span id="userEmail"></span></p>
+                <div class="form-group">
+                
+                    <div class="">
+                      <label for="old_Password">Old Password</label>
+                    <input type="password" class="form-control" id="oldPassword" placeholder="old password" /></div>
+                    <br/>
+                    <div class="">
+                    <label for="new_Password">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="new password"  /></div>
+                    <br/>
+                    <div class="">
+                    <button type="submit" id="changePassword" class="btn btn-primary">Change Password</button></div>
+                </div>
+
+                <!-- <button type="submit" id="sendEmail" class="btn btn-primary">Request Password Change</button> -->
+            </form>
+            <!-- PROFILE -->
+            <form id="frmProfile" role="form">
+                <h2>Profile</h2><br/>
+                <p>You MAY only update ONCE for profile. May proceed to <a href="#/status">Status</a> section for your funding status updates</p>
+                <br />
+                <div class="form-group">
+                    <label for="txtName">Name :</label>
+                    <input type="text" class="form-control" id="txtName" placeholder="Name" name="name" />
+                </div>
+                <div class="form-group">
+                    <label for="fundType">Funding Type :</label>
+                    <select id="fundType" name="fundingType" class="form-control">
+                        <option>Individual</option>
+                        <option>Startup</option>
+                    </select>
+                </div>
+                <button type="submit" id="updateProfile" class="btn btn-primary">Update</button>
+            </form>
+            <!-- / PROFILE -->
+            <!-- STATUS -->
+            <form id="frmStatus" role="form">
+                <h2 id="welcome">Welcome, </h2>
+                <b><span>Status: </span></b>
+                <p id="status"></p>
+                <b><span>Progress: </span></b>
+                <p id="progress"></p>
+                <b><span>Description: </span></b>
+                <p id="update"></p>
+                <a id="applyForm" target="_blank" class="btn btn-primary">
+                    Apply Now</a>
+            </form>
+            <!-- / STATUS -->
+            <hr />
+            <!-- ALERT BOX -->
+            <div id="alert" class="alert" role="alert">
+                <h4 id="alert-title">You are not logged in</h4>
+                <p id="alert-detail"></p>
+            </div>
+            <!-- / ALERT BOX -->
+        </div>
+    </body>
+    <script>
+     // $(".dropdown").hide();
+        (function (jQuery, Firebase, Path) {
+            "use strict";
+
+            // the main firebase reference
+            var rootRef = new Firebase('https://pconnex-membership.firebaseio.com/');
+
+            // pair our routes to our form elements and controller
+            var routeMap = {
+                '#/': {
+                    form: 'frmLogin',
+                    controller: 'login'
+                },
+                '#/logout': {
+                    form: 'frmLogout',
+                    controller: 'logout'
+                },
+                '#/register': {
+                    form: 'frmRegister',
+                    controller: 'register'
+                },
+                '#/forgot_password': {
+                    form: 'frmForgot',
+                    controller: 'resetEmail',
+                    authRequired: false
+                },
+                '#/change_password': {
+                    form: 'frmChange',
+                    controller: 'changePassword',
+                    authRequired: true // must be logged in to get here
+                },
+                '#/profile': {
+                    form: 'frmProfile',
+                    controller: 'profile',
+                    authRequired: true // must be logged in to get here
+                },
+                '#/status': {
+                    form: 'frmStatus',
+                    controller: 'status',
+                    authRequired: true // must be logged in to get here
+                },
+            };
+
+            // create the object to store our controllers
+            var controllers = {};
+
+            // store the active form shown on the page
+            var activeForm = null;
+
+            var alertBox = $('#alert');
+
+            function routeTo(route) {
+                window.location.href = '#/' + route;
+            }
+
+            // Handle third party login providers
+            // returns a promise
+            function thirdPartyLogin(provider) {
+                var deferred = $.Deferred();
+
+                rootRef.authWithOAuthPopup(provider, function (err, user) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                    if (user) {
+                        deferred.resolve(user);
+                    }
+                });
+
+                return deferred.promise();
+            }
+            ;
+
+            var email;
+
+            // Handle Email/Password login
+            // returns a promise
+            function authWithPassword(userObj) {
+                var deferred = $.Deferred();
+
+                rootRef.authWithPassword(userObj, function onAuth(err, user) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                    if (user) {
+                        deferred.resolve(user);
+                        email = userObj.email;
+                    }
+
+                });
+
+                return deferred.promise();
+            }
+
+            // create a user but not login
+            // returns a promsie
+            function createUser(userObj) {
+                var deferred = $.Deferred();
+                rootRef.createUser(userObj, function (err) {
+
+                    if (!err) {
+                        deferred.resolve();
+                        email = userObj.email;
+                    } else {
+                        deferred.reject(err);
+                    }
+
+                });
+
+                return deferred.promise();
+            }
+
+            // Create a user and then login in
+            // returns a promise
+            function createUserAndLogin(userObj) {
+                return createUser(userObj)
+                        .then(function () {
+                            email = userObj.email;
+                            return authWithPassword(userObj);
+                        });
+            }
+
+            // authenticate anonymously
+            // returns a promise
+            function authAnonymously() {
+                var deferred = $.Deferred();
+                rootRef.authAnonymously(function (err, authData) {
+
+                    if (authData) {
+                        deferred.resolve(authData);
+                    }
+
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                });
+
+                return deferred.promise();
+            }
+
+            // route to the specified route if sucessful
+            // if there is an error, show the alert
+            function handleAuthResponse(promise, route) {
+                $.when(promise)
+                        .then(function (authData) {
+
+                            // route
+                            routeTo(route);
+
+                        }, function (err) {
+                            console.log(err);
+                            // pop up error
+                            showAlert({
+                                title: err.code,
+                                detail: err.message,
+                                className: 'alert-danger'
+                            });
+
+                        });
+            }
+
+            // options for showing the alert box
+            function showAlert(opts) {
+                var title = opts.title;
+                var detail = opts.detail;
+                var className = 'alert ' + opts.className;
+
+                alertBox.removeClass().addClass(className);
+                alertBox.children('#alert-title').text(title);
+                alertBox.children('#alert-detail').text(detail);
+            }
+
+            /// Controllers
+            ////////////////////////////////////////
+
+            controllers.login = function (form) {
+
+                
+                // Check the current user
+                var user = rootRef.getAuth();
+                var userRef;
+
+                // If no current user send to register page
+                if (!user) {
+                    $(".dropdown").hide();
+                }
+
+                // Form submission for logging in
+                form.on('submit', function (e) {
+
+                    var userAndPass = $(this).serializeObject();
+                    var loginPromise = authWithPassword(userAndPass);
+                    e.preventDefault();
+                    handleAuthResponse(loginPromise, 'profile');
+                    $(".dropdown").show();
+
+                });
+
+                // Social buttons
+                form.children('.bt-social').on('click', function (e) {
+
+                    var $currentButton = $(this);
+                    var provider = $currentButton.data('provider');
+                    var socialLoginPromise;
+                    e.preventDefault();
+
+                    socialLoginPromise = thirdPartyLogin(provider);
+                    handleAuthResponse(socialLoginPromise, 'profile');
+
+                });
+
+                form.children('#btAnon').on('click', function (e) {
+                    e.preventDefault();
+                    handleAuthResponse(authAnonymously(), 'profilex');
+                });
+
+            };
+            //send email via firebase verification email
+            controllers.resetEmail = function (form) {
+                form.on('submit', function (e) {
+                    var email = form.find('#resetEmail').val();
+                    rootRef.resetPassword({
+                      email : email
+                    }, function(error) {
+                      if (error === null) {
+                        showAlert({
+                            title: 'Successfully requested Password Reset',
+                            detail: "Awesome ! A password reset email has been sent to your inbox for resetting your password",
+                            className: 'alert-success'
+                        });
+                      } else {
+                        console.log("Error sending password reset email:", error);
+                      }
+                    });
+                });
+            };
+
+            //change password with old/new
+            controllers.changePassword = function (form) {
+                var user = rootRef.getAuth();
+                var userRef;
+                var loginPromise = user;
+
+                // Load user info
+                userRef = rootRef.child('users').child(user.uid);
+                userRef.once('value', function (snap) {
+                    var user = snap.val();
+                    if (!user) {
+                        routeTo('login');
+                    return;
+                    }
+                    
+                    // set the fields
+                    form.find('#userEmail').text(user.email);
+                });
+
+                form.on('submit', function (e) {
+                    var email = form.find('#userEmail').text();
+                    // console.log(email);
+                    var old_pw = form.find('#oldPassword').val();
+                    var new_pw = form.find('#newPassword').val();
+                    // console.log(old_pw + new_pw)
+                    userRef.changePassword({
+                      email: email,
+                      oldPassword : old_pw,
+                      newPassword : new_pw
+                    }, function(error) {
+                      if (error) {
+                        switch (error.code) {
+                          case "INVALID_PASSWORD":
+                            showAlert({
+                            title: 'Incorrect Password',
+                            detail: "Oops, did you insert correct password?",
+                            className: 'alert-danger'
+                            });
+                            break;
+                          case "INVALID_USER":
+                            console.log("The specified user account does not exist.");
+                            break;
+                          default:
+                            showAlert({
+                            title: 'ERROR CHANGING PASSWORD',
+                            detail: "Something went wrong. Try again later",
+                            className: 'alert-danger'
+                            });
+                            break;
+                        }
+                      } else {
+                        showAlert({
+                            title: 'Successfully Updated Password',
+                            detail: "Congratz ! You may login with new password next time",
+                            className: 'alert-success'
+                        });
+                         handleAuthResponse(loginPromise, 'status');
+                      }
+                    });
+                });
+            };
+
+            // logout immediately when the controller is invoked
+            controllers.logout = function (form) {
+                rootRef.unauth();
+                $(".dropdown").hide();
+            };
+
+            controllers.register = function (form) {
+
+                // Form submission for registering
+                form.on('submit', function (e) {
+
+                    var userAndPass = $(this).serializeObject();
+                    var loginPromise = createUserAndLogin(userAndPass);
+                    e.preventDefault();
+
+                    handleAuthResponse(loginPromise, 'profile');
+
+                });
+
+            };
+
+            controllers.profile = function (form) {
+                // Check the current user
+                var user = rootRef.getAuth();
+                var userRef;
+
+                var name = form.find('#txtName').val();
+                var funding = form.find('#fundingType').val();
+                var status;
+                var progress;
+
+                // If no current user send to register page
+                if (!user) {
+                    routeTo('register');
+                    return;
+                }
+
+                var loginPromise = user;
+
+                // Load user info
+                userRef = rootRef.child('users').child(user.uid);
+                userRef.once('value', function (snap) {
+                    var user = snap.val();
+                    if (!user) {
+                        return;
+                    }
+
+                    if (user.status) {
+                        $("#updateProfile").addClass("disabled");
+                        $("#updateProfile").click(function (event) {
+                            event.preventDefault();
+                        });
+                    }
+
+                    // set the fields
+                    form.find('#txtName').val(user.name);
+                    form.find('#fundType').val(user.fundingType);
+                });
+
+                // Save user's info to Firebase
+                form.on('submit', function (e) {
+                    var name = form.find('#txtName').val();
+                    var funding = form.find('#fundType').val();
+                    var status = "N/A";
+                    var progress = 20;
+                    e.preventDefault();
+                    // var userInfo = $(this).serializeObject();
+                    userRef.set({
+                        name: name,
+                        email: email,
+                        fundingType: funding,
+                        status: status,
+                        progress: progress
+                    }, function onComplete() {
+
+                        // show the message if write is successful
+                        showAlert({
+                            title: 'Successfully saved!',
+                            detail: 'You are still logged in',
+                            className: 'alert-success'
+                        });
+
+                    });
+                    handleAuthResponse(loginPromise, 'status');
+                });
+
+            };
+
+
+            controllers.status = function (form) {
+
+                var user = rootRef.getAuth();
+                var userRef;
+
+                // If no current user send to register page
+                if (!user) {
+                    routeTo('register');
+                    return;
+                }
+                userRef = rootRef.child('users').child(user.uid);
+                userRef.once('value', function (snap) {
+                    var user = snap.val();
+                    // console.log(snap.val());
+                    if (!user) {
+                        return;
+                    }
+
+                    // set the fields
+                    form.find('#welcome').text("Welcome, " + user.name);
+                    form.find('#status').text(user.status);
+                    form.find('#progress').text(user.progress + "%");
+
+                    if (user.fundingType == "Startup") {
+                        // update Google Form for Startup
+                        $("#applyForm").attr("href", "http://goo.gl/forms/uJkVEJcWv6MefhuJ2");
+                    } else if (user.fundingType == "Individual") {
+                        // update Google Form for Individual
+                        $("#applyForm").attr("href", "http://goo.gl/forms/1NVkVoP5jkrmLOpA2");
+                    }
+                    if (user.status == "Applied") {
+                        $("#applyForm").click(function (event) {
+                            event.preventDefault;
+                        });
+                        $("#applyForm").addClass("disabled");
+                        form.find("#update").text("Thanks For Applying.\n We'll contact you when there's an update. Stay tuned.");
+                    }
+                    if (user.status == "Rejected") {
+                        $("#applyForm").click(function (event) {
+                            event.preventDefault;
+                        });
+                        $("#applyForm").addClass("disabled");
+                        form.find("#update").text("Thank you for your patience.\n Unfortunately we're unable to process your application to next stage");
+                    }
+                    if (user.status == "Approved") {
+                        $("#applyForm").click(function (event) {
+                            event.preventDefault;
+                        });
+                        $("#applyForm").addClass("disabled");
+                        form.find("#update").text("Thank you for your patience.\n Your application has been successfully approved. We will contact you soon enough");
+                    }
+                    $("#applyForm").click(function () {
+                        userRef.update({
+                            status: "Applied",
+                            progress: 40
+                        });
+
+                        location.reload();
+                    });
+
+                });
+
+
+            }
+            /// Routing
+            ////////////////////////////////////////
+
+            // Handle transitions between routes
+            function transitionRoute(path) {
+                // grab the config object to get the form element and controller
+                var formRoute = routeMap[path];
+                var currentUser = rootRef.getAuth();
+
+                // if authentication is required and there is no
+                // current user then go to the register page and
+                // stop executing
+                if (formRoute.authRequired && !currentUser) {
+                    routeTo('login');
+                    return;
+                }
+
+                // wrap the upcoming form in jQuery
+                var upcomingForm = $('#' + formRoute.form);
+
+                // if there is no active form then make the current one active
+                if (!activeForm) {
+                    activeForm = upcomingForm;
+                }
+
+                // hide old form and show new form
+                activeForm.hide();
+                upcomingForm.show().hide().fadeIn(750);
+
+                // remove any listeners on the soon to be switched form
+                activeForm.off();
+
+                // set the new form as the active form
+                activeForm = upcomingForm;
+
+                // invoke the controller
+                controllers[formRoute.controller](activeForm);
+            }
+
+            // Set up the transitioning of the route
+            function prepRoute() {
+                transitionRoute(this.path);
+            }
+
+
+            /// Routes
+            ///  #/         - Login
+            //   #/logout   - Logut
+            //   #/register - Register
+            //   #/profile  - Profile
+
+            Path.map("#/").to(prepRoute);
+            Path.map("#/logout").to(prepRoute);
+            Path.map("#/register").to(prepRoute);
+            Path.map("#/forgot_password").to(prepRoute);
+            Path.map("#/change_password").to(prepRoute);
+            Path.map("#/profile").to(prepRoute);
+            Path.map("#/status").to(prepRoute);
+            Path.root("#/");
+
+            /// Initialize
+            ////////////////////////////////////////
+
+            $(function () {
+
+                // Start the router
+                Path.listen();
+
+                // whenever authentication happens send a popup
+                rootRef.onAuth(function globalOnAuth(authData) {
+                    // console.log(authData);
+
+                    if (authData) {
+                        showAlert({
+                            title: 'Logged in!',
+                            detail: 'Using ' + authData.provider,
+                            className: 'alert-success'
+                        });
+                    } else {
+                        showAlert({
+                            title: 'You are not logged in',
+                            detail: '',
+                            className: 'alert-info'
+                        });
+                    }
+
+                });
+
+            });
+
+        }(window.jQuery, window.Firebase, window.Path))
+    </script>
+
+</html>

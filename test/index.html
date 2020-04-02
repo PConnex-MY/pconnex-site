@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <title>SC's Firebase Auth</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Firebase -->
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <!-- Bootstrap -->
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.css">
+    <!-- Custom CSS -->
+</head>
+<style type="text/css">
+body {
+    display: inline-block;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    /*   justify-content: center;
+    align-item: center;*/
+}
+
+#container {
+    max-width: 480px;
+    display: inline-block;
+    text-align: left;
+}
+
+.extra {
+    height: 40px;
+    margin-bottom: 60px;
+}
+
+#logoutBtn {
+    background-color: none;
+    color: #E91E63;
+}
+
+.toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
+    color: white;
+}
+
+.md-toolbar-tools > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px #fff solid;
+    margin: 0 8px;
+}
+
+.md-caption {
+    opacity: 0.54;
+}
+
+.md-toolbar-tools > md-menu > span {
+    margin: 0 8px;
+}
+
+#toolbar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    background-color: #3b5998;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+}
+
+#fbBtn {
+    color: #3b5998;
+}
+
+#loginCard {
+    display: flex;
+    max-width: 480px;
+    padding: 16px 24px;
+}
+
+#ProfileCard {
+    display: flex;
+    max-width: 600px;
+    min-width: 480px;
+    padding: 16px 24px;
+}
+
+.cardContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#blueBtn {
+    background-color: #3b5998;
+    color: white;
+}
+
+.listContainer {
+    max-width: 920px;
+}
+
+.todoListItem {
+    min-width: 480px;
+    max-width: 600px;
+    background: rgba(59, 89, 152, 0.8);
+    color: white;
+    margin:8px 0;
+}
+</style>
+
+<body ng-controller="AuthCtrl">
+    <div class="extra"></div>
+    <md-toolbar id="toolbar">
+        <div class="md-toolbar-tools">
+            <h1>
+            <span>Firebase + Angular Auth</span></h1>
+            <span flex></span>
+            <img ng-show="authData" ng-src="{{ authData.facebook.profileImageURL }}" />
+            <md-menu>
+                <span class="md-title" ng-click="$mdOpenMenu()" ng-show="authData"> {{ authData.facebook.displayName }}</span>
+                <md-menu-content>
+                    <md-menu-item>
+                        <b>Facebook ID:</b></md-menu-item>
+                    <md-menu-item>
+                        <span class="md-subhead"> {{authData.facebook.id}}</span>
+                    </md-menu-item>
+                    <md-divider></md-divider>
+                    <md-menu-item>
+                        <md-button id="fbBtn" href="{{authData.facebook.cachedUserProfile.link}}" target="_blank">Go Facebook</md-button>
+                    </md-menu-item>
+                    <md-divider></md-divider>
+                    <md-menu-item>
+                        <md-button ng-click="logout()" id="logoutBtn">Logout</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+    <!-- LOGIN PANEL -->
+    <div class="cardContainer">
+        <md-card id="loginCard" ng-hide="authData">
+            <md-card-content>
+                <h2>Welcome to Ng-Auth Material Design</h2>
+                <p>This app will ask for Facebook Permission for getting public info of yours</p>
+            </md-card-content>
+            <!--   <md-card-footer>
+            Card footer
+        </md-card-footer> -->
+            <div class="md-actions" layout="row|column" layout-align="start|end|center start|end|center">
+                <md-button aria-label="Go Back" id="blueBtn" class="md-raised" ng-click="login()">
+                    Login With Facebook
+                </md-button>
+            </div>
+        </md-card>
+    </div>
+    <!-- ACCOUNT PANEL -->
+    <div id="container">
+        <div class="cardContainer">
+            <md-card id="ProfileCard" ng-show="authData">
+                <md-card-content>
+                    <!-- Logged in user data -->
+                    <div layout="row" layout-sm="column">
+                        <div flex="33">
+                            <img ng-src="http://graphics8.nytimes.com/images/2014/05/22/technology/bits-dinosaur/bits-dinosaur-articleInline-v3.png" width="100%" />
+                        </div>
+                        <div flex="66">
+                            <span class="md-headline">Hello, </span>
+                            <span class="md-headline"> {{ authData.facebook.cachedUserProfile.first_name }}</span>
+                            <br/>
+                            <span class="md-caption">What'd you like to do today ?</span>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div class="cardContainer">
+            <md-card id="ProfileCard" ng-show="authData">
+                <md-card-content>
+                    <!-- Logged in user data -->
+                    <div layout="row" layout-xs="column">
+                        <md-input-container flex>
+                            <label>Todo</label>
+                            <input type="text" id="todo" />
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Categories</label>
+                            <md-select ng-model="selectedCategories" id="categories" ng-model-options="{trackBy: '$value.id'}">
+                                <md-option ng-value="cat" ng-repeat="cat in categories">{{cat.type}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <md-button ng-click="addTask()" id="blueBtn">Add</md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex ng-cloak>
+            <div ng-repeat="todo in todos | orderBy:'FIELD_TO_SORT_BY':true">
+                <md-card class="todoListItem">
+                    <md-card-content>
+                        <h1 class="md-title">{{todo.Todo}}</h1>
+                        <h3 class="md-caption">{{todo.Categories}}</h3>
+                    </md-card-content>
+                    <div class="md-actions" layout="row" layout-align="end end">
+                        <md-button ng-click="removeTodo($index, todo)">Clear</md-button>
+                    </div>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc2/angular-material.js"></script>
+</body>
+
+</html>

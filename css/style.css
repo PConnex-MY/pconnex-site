@@ -1,0 +1,46 @@
+body{
+    background: url('https://firebasestorage.googleapis.com/v0/b/pconnex-membership.appspot.com/o/images%2Fmember%2Fbg_member.jpg?alt=media&token=ed2c7fb6-ce86-4b56-b8a8-b3abbfd2213a') no-repeat;
+    font-family: 'Arial','sans-serif'
+}
+#forgot{
+    display: inline-block;
+    margin: 8px;
+}
+#container{
+    max-width: 920px;
+    min-width: 320px;
+    background: #fff;
+    padding: 16px 25px;
+}
+
+form {
+    display: none;
+}
+
+#terms{
+    height: 360px;
+    max-height: 360px;
+    overflow: auto;
+}
+
+#frmStatus {
+    line-height: 32px;
+}
+
+.tab-content{
+    border-left:1px #e0e0e0 solid;
+    border-right:1px #e0e0e0 solid;
+    padding:0 16px;
+ /*   text-align: justify;*/
+}
+
+#privacyPolicy {
+    padding: 0 16px;
+    text-align: justify; 
+}
+
+@media only screen and (min-width: 640px){
+    .navbar{
+        padding: 10px 0;
+    }
+}
